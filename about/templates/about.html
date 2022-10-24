@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Про нас
+{% endblock %}
+
+{% block main_content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2 style="font-size: 65px">Total Sleep Thane</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+    
+    <!-- product list part start-->
+    <section class="about_us padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="about_us_content">
+                        <img src="{% get_media_prefix %}{{ title.image }}" alt="#" class="img-fluid">
+                        <h3><b>{{ title.title }}</b></h3>
+                        <h3>{{ title.about }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product list part end-->
+
+    <!-- feature part here -->
+    {% include 'feature.html' %}
+    <!-- feature part end -->
+
+{% endblock %}

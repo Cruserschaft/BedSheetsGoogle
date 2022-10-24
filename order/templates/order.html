@@ -1,0 +1,128 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    Замовлення
+{% endblock %}
+
+{% block main_content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>Замовлення</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+  <!--================Checkout Area =================-->
+  <section class="checkout_area section_padding">
+    <div class="container">
+      <div class="billing_details">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>Контактні дані:</h3>
+            <form class="row contact_form" action="{% url 'order' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+              <div class="col-md-6 form-group p_star">
+                {{ form.first_name }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.first_name.0.message }}</b></div>
+              </div>
+              <div class="col-md-6 form-group p_star">
+                {{ form.last_name }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.last_name.0.message }}</b></div>
+              </div>
+              <div class="col-md-6 form-group p_star">
+                {{ form.phone }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.phone.0.message }}</b></div>
+              </div>
+              <div class="col-md-6 form-group p_star">
+                {{ form.email }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.email.0.message }}</b></div>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                {{ form.city }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.city.0.message }}</b></div>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                {{ form.address }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.address.0.message }}</b></div>
+              </div>
+              <ul class="col-md-12 form-group p_star">
+                {{ form.post }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.post.0.message }}</b></div>
+              </ul>
+              <ul class="col-md-12 form-group p_star">
+                {{ form.post_number }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.post_number.0.message }}</b></div>
+              </ul>
+              <div class="col-md-12 form-group p_star">
+                {{ form.post_code }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.post_code.0.message }}</b></div>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                {{ form.commentary }}
+              </div>
+
+              <div class="col-md-12 form-group p_star">
+                {{ form.captcha }}
+                <div><b style="color: rgba(211,94,127,0.89)">{{ error.captcha.0.message }}</b></div>
+                  {{ form.captcha.widget }}
+              </div>
+
+                <button type="submit" class="btn_3">Надіслати</button>
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <div class="order_box">
+              <h2>Замовлення</h2>
+              <ul class="list">
+                <li>
+                  <a href="#">Товар
+                    <span>Ціна</span>
+                  </a>
+                </li>
+
+
+                {% for item in cart %}
+                {% with item.product as product %}
+                <li>
+                  <a href="{% url 'product_item' product.parent.slug %}">
+                    <span class="middle">{{ product.parent.title }}: <br>{{ product.title }}, {{ item.quantity }} шт.</span>
+                    <span class="last">{{ item.total_price }} грн.</span>
+                  </a>
+                </li>
+                {% endwith %}
+                {% endfor %}
+
+              </ul>
+              <ul class="list list_2">
+                <li>
+                  <a href="#">Товарів на:
+                    <span>{{ cart.get_total_price.products }} грн.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Додатково на:
+                    <span>{{ cart.get_total_price.extra }} грн.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Всього:
+                    <span>{{ cart.get_total_price.all }} грн.</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Checkout Area =================-->
+
+{% endblock %}

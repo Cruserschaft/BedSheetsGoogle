@@ -1,0 +1,27 @@
+{% load static %}
+<section class="feature_part section_padding">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <div class="feature_part_tittle">
+                    <h3>{{ feature_info.about_left|safe }}</h3>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="feature_part_content">
+                    <p>{{ feature_info.about_right|safe }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            {% for item in feature %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="single_feature_part">
+                    <img src="{% get_media_prefix %}{{ item.image }}" alt="#">
+                    <h4>{{ item.title|safe }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

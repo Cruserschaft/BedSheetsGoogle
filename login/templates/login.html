@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Логін
+{% endblock %}
+
+{% block main_content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>Вхід в особистий кабінет</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+    <!--================login_part Area =================-->
+    <section class="login_part section_padding ">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6">
+                    <div class="login_part_text text-center">
+                        <div class="login_part_text_iner" style="width: 450px">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="login_part_form">
+                        <div class="login_part_form_iner">
+
+
+
+                            {% if not username %}
+                            <h3>Ласкаво просимо назад!</h3>
+                            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                                {% csrf_token %}
+                                <div class="col-md-12 form-group p_star">
+                                    {{ login_form.username }}
+                                </div>
+                                <div class="col-md-12 form-group p_star">
+                                    {{ login_form.password }}
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Війти
+                                    </button>
+                                </div>
+                            </form>
+                            {% else %}
+                                <h3>Ви війшли як <b>{{ username }}</b></h3>
+                                <div class="col-md-12 form-group">
+                                    <a href="{% url 'logout' %}">
+                                        <button type="submit" value="submit" class="btn_3">
+                                            Вийти
+                                        </button>
+                                    </a>
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================login_part end =================-->
+{% endblock %}

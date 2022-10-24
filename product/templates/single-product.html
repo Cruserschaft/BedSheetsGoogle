@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    {{ prod_item.title }}
+{% endblock %}
+
+
+{% block main_content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part single_product_breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="product_img_slide owl-carousel">
+                    <div class="single_product_img">
+                        <img src="{% get_media_prefix %}{{ prod_item.image }}" alt="#" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="single_product_text text-center" style="font-family: Calibri,serif">
+                    <h3>{{ prod_item.title }}</h3>
+                    <p>{{ prod_item.about }}</p>
+                    <h3>Додавай до кошика прямо зараз!</h3><br>
+                    {% for item in item_types %}
+                    <a href="{% url 'cart_add' item.id %}" class="btn_3 btn_3_custom">{{ item.title }} за {{ item.cost }} гривень</a><br>
+                    <br>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Замовлення
+{% endblock %}
+
+{% block main_content %}
+
+<section class="breadcrumb_part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <h2>Замовлення</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="col-lg-12" style="margin-top: 50px">
+    <div class="text-center">
+        <h3>{{ names }}, дякуємо за замовлення!</h3>
+        <h3>ID вашого замовлення:</h3>
+        <h3><b>{{ uuid }}</b></h3>
+        <a href="{% url 'home' %}"><button class="btn_3" style="margin-top: 50px">До головної сторінки</button></a>
+        <a href="{% url 'checkout' %}"><button class="btn_3" style="margin-top: 50px">Перевірити замовлення</button></a>
+        
+        
+    </div>
+</div>
+
+{% endblock %}

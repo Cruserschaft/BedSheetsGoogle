@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Мої товари
+{% endblock %}
+
+{% block main_content %}
+
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>Ваші покупки</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+  <!--================Cart Area =================-->
+  <section class="cart_area section_padding">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Товар</th>
+                <th scope="col">Ціна за 1 шт.</th>
+                <th scope="col">Кількість</th>
+                <th scope="col">Загальна ціна</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in cart %}
+              {% with item.product as product %}
+              <tr>
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                        <a href="{% url 'product_item' product.parent.slug %}"><img src="{% get_media_prefix %}{{ product.parent.image }}" alt="" /></a>
+                    </div>
+                    <div class="media-body">
+                      <p><a href="{% url 'product_item' product.parent.slug %}">{{ product.parent.title }}: {{ product.title }}</a></p>
+
+
+                        {% if product.parent.extra1 %}
+                            {% if 'extra1' not in item %}
+                            <a href="{% url 'extra_add' product.id 1 %}" class="btn_3_mini btn_3 ">Додати</a> {{ product.parent.extra1.title }}
+                            {% else %}
+                            <a href="{% url 'extra_remove' product.id 1 %}" class="btn_3_mini btn_3 ">Видалити</a> <b>{{ product.parent.extra1.title }}</b>
+                            {% endif %}
+                        {% endif %}<br>
+
+
+                        {% if product.parent.extra2 %}
+                            {% if 'extra2' not in item %}
+                            <a href="{% url 'extra_add' product.id 2 %}" class="btn_3_mini btn_3 ">Додати</a> {{ product.parent.extra2.title }}
+                            {% else %}
+                            <a href="{% url 'extra_remove' product.id 2 %}" class="btn_3_mini btn_3 ">Видалити</a> <b>{{ product.parent.extra2.title }}</b>
+                            {% endif %}
+                        {% endif %}<br>
+
+
+                        {% if product.parent.extra3 %}
+                            {% if 'extra3' not in item %}
+                            <a href="{% url 'extra_add' product.id 3 %}" class="btn_3_mini btn_3 ">Додати</a> {{ product.parent.extra3.title }}
+                            {% else %}
+                            <a href="{% url 'extra_remove' product.id 3 %}" class="btn_3_mini btn_3 ">Видалити</a> <b>{{ product.parent.extra3.title }}</b>
+                            {% endif %}
+                        {% endif %}<br>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5>{{ product.cost }}</h5>
+                </td>
+                <td>
+                    <a href="{% url 'cart_add' product.id %}" class="btn_3 btn_3_mini_2">+</a>
+                     &ensp;&ensp;{{ item.quantity }}&ensp;&ensp;
+                    {% if item.quantity == 1 %}
+                    <a href="{% url 'cart_remove' product.id %}" class="btn_3 btn_3_mini_2">-</a>
+                    {% else %}
+                    <a href="{% url 'cart_sub' product.id %}" class="btn_3 btn_3_mini_2">-</a>
+                    {% endif %}
+                </td>
+                <td>
+                  <h5>{{ item.total_price }}
+                    {% if 'extra1' in item %}<br>+{% widthratio product.parent.extra1.cost 1 item.quantity %}{% endif %}
+                    {% if 'extra2' in item %}<br>+{% widthratio product.parent.extra2.cost 1 item.quantity %}{% endif %}
+                    {% if 'extra3' in item %}<br>+{% widthratio product.parent.extra3.cost 1 item.quantity %}{% endif %}
+                  </h5>
+                </td>
+              </tr>
+              {% endwith %}
+              {% endfor %}
+
+
+              <tr class="bottom_button">
+                <td>
+                  <a class="btn_1" href="{% url 'cart_clear' %}">Очистити</a>
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <div class="cupon_text float-right">
+
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <h5>Всього, грн:</h5>
+                  {% if not cart.get_total_price.extra == 0 %}
+                  <h5>Додатково, грн:</h5>
+                  {% endif %}
+                </td>
+                <td>
+                  <h5>
+                      {{ cart.get_total_price.all }}
+                      {% if not cart.get_total_price.extra == 0 %}
+                          <br>{{ cart.get_total_price.extra }}
+                      {% endif %}
+                  </h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="{% url 'product' %}">Продовжити покупки</a>
+            <a class="btn_1 checkout_btn_1" href="{% url 'order' %}">Оформити замовлення</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <form action="{% url 'order' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+  <!--================End Cart Area =================-->
+{% endblock %}
